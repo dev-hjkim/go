@@ -4,7 +4,14 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+
+	"net/http"
+	"github.com/labstack/echo/v4"
 )
+
+func account(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello, it's account API")
+}
 
 func main() {
 	logger := get()
@@ -12,6 +19,13 @@ func main() {
 	logger.info("Something noteworthy happened...")
 	logger.warn("There is something you should know about...")
 	logger.error("Something went wrong...")
+
+	e := echo.New()
+	e.GET("/account", account)
+
+	e.Start(":8000")
+	
+
 }
 
 type Logger struct {
