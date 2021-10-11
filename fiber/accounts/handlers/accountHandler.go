@@ -3,27 +3,25 @@ package handlers
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"go/fiber/accounts/model"
+	"go/fiber/accounts/models"
 )
 
-func ListHandler(c *fiber.Ctx) error {
-	fmt.Println("ListHandler started!!")
+func GetAccountListHandler(c *fiber.Ctx) error {
+	fmt.Println("GetAccountListHandler started!!")
 	return c.SendStatus(fiber.StatusOK)
 }
 
-func AccountHandler(c *fiber.Ctx) error {
-	fmt.Println("AccountHandler started!!")
+func PostAccountCreateHandler(c *fiber.Ctx) error {
+	fmt.Println("PostAccountCreateHandler started!!")
 
-	a := new(model.Account)
+	account := new(models.Account)
 
-	fmt.Println(c.Body())
-
-	if err := c.BodyParser(a); err != nil {
+	if err := c.BodyParser(account); err != nil {
 		return err
 	}
 
-	fmt.Println(a.AccoutSeq)
-	fmt.Println(a.AccountName)
+	fmt.Println(account)
+
 
 	return c.SendStatus(fiber.StatusOK)
 }
