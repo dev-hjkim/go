@@ -3,8 +3,8 @@ package main
 import (
 	"dozn/app-server/logging"
 	"dozn/app-server/services/account"
-	"dozn/app-server/services/auth"
-	"dozn/app-server/services/transaction"
+	// "dozn/app-server/services/auth"
+	// "dozn/app-server/services/transaction"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -38,9 +38,9 @@ func main() {
 	// 7. Deposit (User, Account, Transaction)
 	// 8. Money tranfer (User, Account, Transaction)
 
-	auth.SetupRoutes(api.Group("/auth"))
-	account.SetupRoutes(api.Group("/account"))
-	transaction.SetupRoutes(api.Group("/transaction"))
+	// auth.SetupRoutes(api.Group("/auth"))
+	api.Group("/account/*", account.List)
+	// transaction.SetupRoutes(api.Group("/transaction"))
 
 	// Start server
 	logging.Info("Start server...")
