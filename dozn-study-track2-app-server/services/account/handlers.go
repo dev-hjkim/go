@@ -5,7 +5,8 @@ import (
 )
 
 func create(context *fiber.Ctx) error {
-	return context.SendString("ACCOUNT : create")
+	res := doRequest("http://localhost:3001/create", context.Method(), context.Body())
+	return context.SendString(res)
 }
 
 func list(context *fiber.Ctx) error {
