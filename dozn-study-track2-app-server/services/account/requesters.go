@@ -6,7 +6,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func doRequest(url string, method string, body []byte) {
+func doRequest(url string, method string, body []byte) string {
 	req := fasthttp.AcquireRequest()
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseRequest(req)
@@ -21,4 +21,5 @@ func doRequest(url string, method string, body []byte) {
 
 	bodyBytes := resp.Body()
 	fmt.Println(string(bodyBytes))
+	return string(bodyBytes)
 }
