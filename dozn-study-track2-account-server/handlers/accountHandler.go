@@ -11,7 +11,7 @@ import (
 func GetAccountListHandler(c *fiber.Ctx) error {
 	fmt.Println("GetAccountListHandler started!!")
 
-	acct := models.Account{15, "01", 0.05}
+	acct := models.Account{}
 
 	// JSON 인코딩
 	jsonBytes, err := json.Marshal(acct)

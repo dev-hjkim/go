@@ -3,6 +3,7 @@ package main
 import (
 	"dozn/account-server/handlers"
 	"dozn/account-server/models"
+	"dozn/account-server/database"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -17,6 +18,8 @@ import (
 func main() {
 	config := LoadConfigration("local")
 	app := fiber.New()
+
+	database.ConnectDB(config)
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
