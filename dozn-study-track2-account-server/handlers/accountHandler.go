@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"dozn/account-server/models"
-	"encoding/json"
+	"dozn/account-server/database"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,30 +11,36 @@ import (
 func GetAccountListHandler(c *fiber.Ctx) error {
 	fmt.Println("GetAccountListHandler started!!")
 
-	acct := models.Account{}
+	db := database.DB
+	var accounts []models.Account
 
-	// JSON 인코딩
-	jsonBytes, err := json.Marshal(acct)
-	if err != nil {
-		panic(err)
-	}
+	db.Find(&accounts)
 
-	// JSON 바이트를 문자열로 변경
-	jsonString := string(jsonBytes)
+	// If no account is present return an error
+    if len(accounts) == 0 {
+        return c.Status(404).JSON(fiber.Map{"status": "error", "message": "No accounts present", "data": nil})
+    }
 
-	return c.SendString(jsonString)
+    // Else return accounts
+    return c.JSON(fiber.Map{"status": "success", "message": "Accounts Found", "data": accounts})
 }
 
 func PostAccountCreateHandler(c *fiber.Ctx) error {
 	fmt.Println("PostAccountCreateHandler started!!")
 
+	db := database.DB
 	account := new(models.Account)
 
 	if err := c.BodyParser(account); err != nil {
-		return err
+		return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Review your input", "data": err})
 	}
 
-	fmt.Println(account)
+	// Create the Account and return error if encountered
+    err := db.Create(&account).Error
+    if err != nil {
+        return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Could not create account", "data": err})
+    }
 
-	return c.SendStatus(fiber.StatusOK)
+    // Return the created account
+    return c.JSON(fiber.Map{"status": "success", "message": "Created Account", "data": account})
 }
