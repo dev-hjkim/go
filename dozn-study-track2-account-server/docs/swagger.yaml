@@ -1,0 +1,74 @@
+basePath: /
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Account:
+    properties:
+      accountNickname:
+        type: string
+      accountNumber:
+        type: string
+      accountType:
+        type: string
+      balance:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:3001
+info:
+  contact:
+    email: hjkim@dozn.co.kr
+    name: API Support
+  description: This is a description for Account Api
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Account API
+  version: "1.0"
+paths:
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: Post an account
+      operationId: create-account
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+      summary: Post an account
+      tags:
+      - Account
+  /list:
+    get:
+      consumes:
+      - application/json
+      description: Get an account list by userId
+      operationId: get-account-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+      summary: Get an account list
+      tags:
+      - Account
+swagger: "2.0"

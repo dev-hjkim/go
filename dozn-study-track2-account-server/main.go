@@ -10,11 +10,23 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	swagger "github.com/arsmn/fiber-swagger/v2"
+	_ "dozn/account-server/docs"
 )
 
 /*
   Account Server
 */
+
+// @title Account API
+// @version 1.0
+// @description This is a description for Account Api
+// @contact.name API Support
+// @contact.email hjkim@dozn.co.kr
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:3001
+// @BasePath /
 func main() {
 	config := LoadConfigration("local")
 	app := fiber.New()
@@ -25,6 +37,8 @@ func main() {
 		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
+
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	app.Post("/list", handlers.GetAccountListHandler)
 	app.Post("/create", handlers.PostAccountCreateHandler)

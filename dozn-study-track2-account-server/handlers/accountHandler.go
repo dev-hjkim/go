@@ -8,6 +8,15 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetAccountList godoc
+// @Summary Get an account list
+// @Description Get an account list by userId
+// @ID get-account-list
+// @Accept  json
+// @Produce  json
+// @Tags Account
+// @Success 200 {object} models.Account
+// @Router /list [get]
 func GetAccountListHandler(c *fiber.Ctx) error {
 	fmt.Println("GetAccountListHandler started!!")
 
@@ -25,6 +34,16 @@ func GetAccountListHandler(c *fiber.Ctx) error {
     return c.JSON(fiber.Map{"status": "success", "message": "Accounts Found", "data": accounts})
 }
 
+
+// PostAccountCreate godoc
+// @Summary Post an account
+// @Description Post an account
+// @ID create-account
+// @Accept  json
+// @Produce  json
+// @Tags Account
+// @Success 200 {object} models.Account
+// @Router /create [post]
 func PostAccountCreateHandler(c *fiber.Ctx) error {
 	fmt.Println("PostAccountCreateHandler started!!")
 
